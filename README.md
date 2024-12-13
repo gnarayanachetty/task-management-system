@@ -64,6 +64,30 @@ npm start: Start production server
 npm run lint: Run ESLint
 
 
+### ---------------------------------------------
+
+### Docker Setup (if you want to start the server using docker)
+
+#### Prerequisites
+- Docker
+- Docker Compose
+
+#### Build and Run with Docker
+```bash
+# Build the Docker images
+docker-compose build
+
+# Start the services
+docker-compose up -d
+
+# View running containers
+docker-compose ps
+
+# Stop the services
+docker-compose down
+
+#### -------------------------------------------------
+
 Project Structure
 
 task-management-system/

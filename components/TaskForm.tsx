@@ -8,10 +8,9 @@ import { CreateTaskData } from '@/lib/api';
 interface TaskFormProps {
   projectId: string;
   onSuccess?: () => void;
-  onSubmit?: (data: CreateTaskData) => Promise<void>;
 }
 
-export default function TaskForm({ projectId, onSuccess, onSubmit }: TaskFormProps) {
+export default function TaskForm({ projectId, onSuccess }: TaskFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,18 +23,14 @@ export default function TaskForm({ projectId, onSuccess, onSubmit }: TaskFormPro
     const data: CreateTaskData = {
       title: formData.get('title') as string,
       description: formData.get('description') as string,
-      priority: formData.get('priority') as Priority,
+      priority: (formData.get('priority') as Priority) || Priority.MEDIUM,
       dueDate: formData.get('dueDate') as string,
       status: Status.TODO,
       projectId
     };
 
     try {
-      if (onSubmit) {
-        await onSubmit(data);
-      } else {
-        await taskApi.create(data);
-      }
+      await taskApi.create(data);
       e.currentTarget.reset();
       onSuccess?.();
     } catch (error) {
@@ -52,55 +47,63 @@ export default function TaskForm({ projectId, onSuccess, onSubmit }: TaskFormPro
           {error}
         </div>
       )}
-      
       <div>
-        <label className="block text-sm font-medium text-gray-700">Title</label>
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          Task Title
+        </label>
         <input
           type="text"
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           name="title"
+          id="title"
+          required
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
       </div>
-      
       <div>
-        <label className="block text-sm font-medium text-gray-700">Description</label>
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          Description
+        </label>
         <textarea
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           name="description"
+          id="description"
+          rows={3}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
       </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Priority</label>
-          <select
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-            name="priority"
-          >
-            {Object.values(Priority).map((priority) => (
-              <option key={priority} value={priority}>{priority}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Due Date</label>
-          <input
-            type="date"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-            name="dueDate"
-          />
-        </div>
+      <div>
+        <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
+          Priority
+        </label>
+        <select
+          name="priority"
+          id="priority"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        >
+          <option value={Priority.LOW}>Low</option>
+          <option value={Priority.MEDIUM}>Medium</option>
+          <option value={Priority.HIGH}>High</option>
+        </select>
       </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-blue-300"
-      >
-        {loading ? 'Creating...' : 'Create Task'}
-      </button>
+      <div>
+        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
+          Due Date
+        </label>
+        <input
+          type="date"
+          name="dueDate"
+          id="dueDate"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </div>
+      <div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          {loading ? 'Creating...' : 'Create Task'}
+        </button>
+      </div>
     </form>
   );
-} 
+}
