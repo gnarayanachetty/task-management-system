@@ -1,3 +1,4 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 export default {
@@ -10,8 +11,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: {
+          light: '#ffffff',
+          dark: '#121212'
+        },
+        text: {
+          light: '#000000',
+          dark: '#ffffff'
+        }
       },
     },
   },

@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Header() {
   const { data: session } = useSession();
@@ -30,6 +31,8 @@ export default function Header() {
               Projects
             </Link>
           </nav>
+
+          <ThemeToggle />
 
           <div className="flex items-center space-x-4">
             {session?.user && (

@@ -7,10 +7,11 @@ import { CreateTaskData } from '@/lib/api';
 
 interface TaskFormProps {
   projectId: string;
+  onSubmit?: (data: CreateTaskData) => Promise<void>;
   onSuccess?: () => void;
 }
 
-export default function TaskForm({ projectId, onSuccess }: TaskFormProps) {
+export default function TaskForm({ projectId, onSubmit, onSuccess }: TaskFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +31,11 @@ export default function TaskForm({ projectId, onSuccess }: TaskFormProps) {
     };
 
     try {
-      await taskApi.create(data);
+      if (onSubmit) {
+        await onSubmit(data);
+      } else {
+        await taskApi.create(data);
+      }
       e.currentTarget.reset();
       onSuccess?.();
     } catch (error) {
