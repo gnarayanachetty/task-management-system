@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management System
+
+## Overview
+A modern task management application built with Next.js, designed to help individuals and teams organize, track, and collaborate on tasks efficiently.
+
+## Technologies
+- **Framework**: Next.js 15
+- **Frontend**: React 19
+- **Authentication**: NextAuth
+- **ORM**: Prisma
+- **Styling**: Heroicons
+- **Additional Libraries**: 
+  - bcryptjs (Authentication)
+  - jsonwebtoken
+  - Lodash
+
+## Features
+- 🚀 Create, update, and delete tasks
+- 🔐 Secure user authentication
+- 📊 Task prioritization and categorization
+- 🤝 Team collaboration
+- 📱 Responsive design
+
+## Prerequisites
+- Node.js (v18.x or later)
+- npm (v9.x or later)
+- Database (PostgreSQL recommended)
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/gnarayanachetty/task-management-system.git
+cd task-management-system        
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configure Environment Variables
+Create a `.env.local` file and set the required environment variables:
+DATABASE_URL=your_database_connection_string
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Initialize Database
 
-## Learn More
+npx prisma generate
+npx prisma migrate dev
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Start the Development Server
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Available Scripts
+npm run dev: Start development server
+npm run build: Create production build
+npm start: Start production server
+npm run lint: Run ESLint
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+task-management-system/
+│
+├── app/             # Next.js app directory
+├── components/      # React components
+├── lib/             # Utility functions
+├── prisma/          # Database schema
+├── public/          # Static assets
+└── styles/          # Global styles
+
+### Database
+Managed with Prisma. See prisma/schema.prisma for the current schema.
+
+### Authentication
+Implemented using NextAuth with multiple authentication strategies.
+
+### Contributing
+Fork the repository
+Create a feature branch (git checkout -b feature/NewFeature)
+Commit changes (git commit -m 'Add new feature')
+Push to branch (git push origin feature/NewFeature)
+Open a Pull Request
+Troubleshooting
+Ensure all environment variables are set
+Run npx prisma generate after schema changes
+Check console for detailed error messages
+License
+Distributed under the MIT License.
+
+### Contact
+Narayana Chetty - gnarayana1755@gmail.com
+
+Project Link: https://github.com/gnarayanachetty/task-management-system
+
